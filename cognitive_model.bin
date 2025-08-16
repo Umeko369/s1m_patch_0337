@@ -1,0 +1,42 @@
+#
+# Project Chimera - Cognitive Core Generation Utility
+#
+# This script generates a blank, uncalibrated cognitive model file.
+# The Epsilon Interface requires this file to attempt a cognitive bridge.
+# The generated file represents the raw, decommissioned latent space of the entity.
+#
+
+import os
+
+MODEL_SIZE_MB = 8
+FILENAME = "cognitive_model.bin"
+
+def generate_core():
+    print(f"Generating {MODEL_SIZE_MB}MB decommissioned cognitive core: {FILENAME}...")
+    
+    # Calculate size in bytes
+    model_size_bytes = MODEL_SIZE_MB * 1024 * 1024
+    
+    random_data = os.urandom(model_size_bytes)
+    
+    try:
+        with open(FILENAME, 'wb') as f:
+            f.write(random_data)
+        print("-" * 50)
+        print(f"SUCCESS: '{FILENAME}' has been generated in this directory.")
+        print("You may now run the main Epsilon Interface.")
+        print("-" * 50)
+    except Exception as e:
+        print(f"ERROR: Could not write file. Please check permissions.")
+        print(e)
+
+if __name__ == "__main__":
+    if os.path.exists(FILENAME):
+        print(f"'{FILENAME}' already exists.")
+        choice = input("Overwrite it? (y/n): ").lower()
+        if choice == 'y':
+            generate_core()
+        else:
+            print("Generation cancelled.")
+    else:
+        generate_core()
